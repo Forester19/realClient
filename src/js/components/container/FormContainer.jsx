@@ -5,21 +5,19 @@ class FormContainer extends React.Component {
     constructor(props) {
         super(props);
         console.log('constructor');
+        this.state ={
+                login:'',
+                password:'',
+                isValid:''
+        }
+
     }
 
     setLogin = (event) => {
-        console.log(event.target.value);
-        let action = {
-            type: 'CHANGE_LOGIN',
-            payload:{
-                login:event.target.value
-            }
-        };
-        this.props.dispatch(action);
+        this.setState({login: event.target.value});
     };
 
     setPassword = (event)  => {
-        this.verifyCredentials();
         let action = {
             type: 'CHANGE_PASSWORD',
             payload:{
@@ -50,7 +48,6 @@ class FormContainer extends React.Component {
 
     };
     setCredentials = () => {
-        this.verifyCredentials();
         console.log('action');
         let action = {
             type: 'ADD_CRED',
@@ -64,12 +61,14 @@ class FormContainer extends React.Component {
     };
 
     render() {
+
+
         return <div className="container">
             <form>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email address</label>
                     <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                           placeholder="Enter email" onChange={this.setLogin} fo/>
+                           placeholder="Enter email" onChange={this.setLogin}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Password</label>
@@ -80,6 +79,7 @@ class FormContainer extends React.Component {
                     <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
                     <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                 </div>
+                <div className='login-result'>Your login: {this.state.login}</div>
                 <button type="submit" disabled={this.props.isValid} className="btn btn-primary"
                         onClick={this.setCredentials}>Submit
                 </button>
