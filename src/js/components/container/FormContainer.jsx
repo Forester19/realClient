@@ -37,12 +37,11 @@ class FormContainer extends React.Component {
     };
 
     render() {
-
-
         return <div className="container">
-            <form>
+            <div>{this.props.title}</div>
+            <form onSubmit={function (event) {event.preventDefault();}}>
                 <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email address</label>
+                    <label htmlFor="exampleInputEmail1">Login or email address</label>
                     <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                            placeholder="Enter email" onChange={this.setLogin}/>
                 </div>
@@ -65,16 +64,14 @@ class FormContainer extends React.Component {
         </div>
 
     }
-
-
 }
 
 function mapStateToProps(state) {
     console.log('mapStateToProps');
     return {
-        login: state.login,
-        password:state.password,
-        isAuthorized:state.isAuthorized
+        login: state.userInfo.login,
+        password:state.userInfo.password,
+        isAuthorized:state.userInfo.isAuthorized
     }
 }
 

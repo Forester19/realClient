@@ -1,43 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FormContainer from './js/components/container/FormContainer';
-import {createStore} from "redux";
 import {Provider} from 'react-redux';
+import {createStore} from "redux";
 
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
+import FormContainer from './js/components/container/FormContainer';
+import {HeaderComponent} from "./js/components/container/HeaderComponent";
+import {FooterComponent} from "./js/components/container/HeaderComponent";
 
 const createState = () => ({
-    userInfo: {
-        login: '',
-        password: '',
-        isAuthorized: false
-    }
+   userInfo: {
+       login: '',
+       password: '',
+       isAuthorized: false
+   }
 });
 let reducer = (state = createState(), action) => {
-    console.log('reducer');
-
     switch (action.type) {
-        case 'ADD_CRED':
-            console.log('ADD_CRED ' + action.login);
-            return {
-                userInfo: {
-                    login: action.login,
-                    password: action.password,
-                    isAuthorized: action.isAuthorized
-                }
-            };
+        case 'ADD_CRED': {
+            let {login, password, isAuthorized} = action.payload;
+            return {...state, userInfo: {login, password, isAuthorized}};
+        }
     }
-    console.log('state ' + state.userInfo);
     return state;
 };
 
+const history = createBrowserHistory();
 const store = createStore(reducer);
+console.log(JSON.stringify(store));
 
 
 ReactDOM.render(
     <Provider store={store}>
+        <BrowserRouter>
         <div>
-            <FormContainer/>
+            <HeaderComponent/>
+            <Switch>
+                <Route path='/log-in' render={() => <FormContainer title={'LogIn'}/>}/>
+                <Route path='/sign-up' render={() => <FormContainer title={'SignUp'}/>}/>
+            </Switch>
+            <FooterComponent/>
         </div>
+        </BrowserRouter>
     </Provider>
     , document.getElementById('app'));
 
