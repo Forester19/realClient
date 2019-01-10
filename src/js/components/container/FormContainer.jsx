@@ -8,45 +8,21 @@ class FormContainer extends React.Component {
         this.state ={
                 login:'',
                 password:'',
-                isValid:''
+                isAuthorized: false
         }
 
     }
-
     setLogin = (event) => {
         this.setState({login: event.target.value});
     };
-
     setPassword = (event)  => {
-        let action = {
-            type: 'CHANGE_PASSWORD',
-            payload:{
-                password:event.target.value
-            }
-        };
-        this.props.dispatch(action);
+        this.setState({password: event.target.value});
     };
-
     verifyCredentials = () => {
         console.log('verifyCredentials');
-        if (this.state.login && this.state.password) {
-            let action = {
-                type: 'CHANGE_VALID',
-                payload: {
-                    isValid: true
-                }
-            };
-            this.props.dispatch(action);
-        }
-        let action = {
-                type: 'CHANGE_VALID',
-                payload:{
-                    isValid:false
-                }
-            };
-            this.props.dispatch(action);
-
+        return !!(this.state.login && this.state.password);
     };
+
     setCredentials = () => {
         console.log('action');
         let action = {
@@ -54,7 +30,7 @@ class FormContainer extends React.Component {
             payload: {
                 login: this.state.login,
                 password: this.state.password,
-                isValid: this.state.isValid
+                isAuthorized: true
             }
         };
         this.props.dispatch(action);
@@ -67,7 +43,7 @@ class FormContainer extends React.Component {
             <form>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Email address</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                            placeholder="Enter email" onChange={this.setLogin}/>
                 </div>
                 <div className="form-group">
@@ -80,7 +56,9 @@ class FormContainer extends React.Component {
                     <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                 </div>
                 <div className='login-result'>Your login: {this.state.login}</div>
-                <button type="submit" disabled={this.props.isValid} className="btn btn-primary"
+                <div className='login-result'>Your password: {this.state.password}</div>
+                <div className='login-result'>Your verification: {' ' + this.verifyCredentials()}</div>
+                <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
                         onClick={this.setCredentials}>Submit
                 </button>
             </form>
@@ -96,7 +74,7 @@ function mapStateToProps(state) {
     return {
         login: state.login,
         password:state.password,
-        isValid:state.isValid
+        isAuthorized:state.isAuthorized
     }
 }
 

@@ -9,7 +9,7 @@ const createState = () => ({
     userInfo: {
         login: '',
         password: '',
-        isValid: false
+        isAuthorized: false
     }
 });
 let reducer = (state = createState(), action) => {
@@ -22,34 +22,9 @@ let reducer = (state = createState(), action) => {
                 userInfo: {
                     login: action.login,
                     password: action.password,
-                    isValid: action.isValid
+                    isAuthorized: action.isAuthorized
                 }
             };
-        case 'CHANGE_LOGIN':
-           return Object.assign({}, state, {
-                userInfo: {
-                    login: action.payload.login,
-                    password:state.userInfo.password,
-                    isValid:state.userInfo.isValid
-                }
-            });
-        case 'CHANGE_PASSWORD':
-            return Object.assign({}, state, {
-                userInfo: {
-                    login: state.userInfo.login,
-                    password:action.payload.password,
-                    isValid:state.userInfo.isValid
-                }
-            });
-        case 'CHANGE_VALID':
-            return Object.assign({}, state, {
-                userInfo: {
-                    login: state.userInfo.login,
-                    password:state.userInfo.password,
-                    isValid:action.payload.isValid
-                }
-            });
-
     }
     console.log('state ' + state.userInfo);
     return state;
