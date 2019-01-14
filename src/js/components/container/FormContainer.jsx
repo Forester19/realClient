@@ -6,9 +6,9 @@ class FormContainer extends React.Component {
         super(props);
         console.log('constructor');
         this.state ={
-                login:'',
-                password:'',
-                isAuthorized: false
+                login:props.login,
+                password:props.password,
+                isAuthorized: props.isAuthorized
         }
 
     }
@@ -22,6 +22,10 @@ class FormContainer extends React.Component {
         console.log('verifyCredentials');
         return !!(this.state.login && this.state.password);
     };
+
+    componentWillReceiveProps(nextProps, nextContext) {
+        this.state.login = nextProps.login;
+    }
 
     setCredentials = () => {
         console.log('action');
@@ -43,7 +47,7 @@ class FormContainer extends React.Component {
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Login or email address</label>
                     <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                           placeholder="Enter email" onChange={this.setLogin}/>
+                           placeholder="Enter email" value={this.state.login} onChange={this.setLogin}/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="exampleInputPassword1">Password</label>
@@ -54,9 +58,6 @@ class FormContainer extends React.Component {
                     <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
                     <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                 </div>
-                <div className='login-result'>Your login: {this.state.login}</div>
-                <div className='login-result'>Your password: {this.state.password}</div>
-                <div className='login-result'>Your verification: {' ' + this.verifyCredentials()}</div>
                 <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
                         onClick={this.setCredentials}>Submit
                 </button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {createStore} from "redux";
+import {applyMiddleware, createStore} from "redux";
 
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
@@ -9,6 +9,10 @@ import { createBrowserHistory } from 'history';
 import FormContainer from './js/components/container/FormContainer';
 import {HeaderComponent} from "./js/components/container/HeaderComponent";
 import {FooterComponent} from "./js/components/container/HeaderComponent";
+import {requestAuthorisation} from "./js/service/RequestAuthorization";
+import thunk from 'redux-thunk';
+
+
 
 const createState = () => ({
    userInfo: {
@@ -28,8 +32,7 @@ let reducer = (state = createState(), action) => {
 };
 
 const history = createBrowserHistory();
-const store = createStore(reducer);
-console.log(JSON.stringify(store));
+const store = createStore(reducer,applyMiddleware(thunk));
 
 
 ReactDOM.render(
@@ -52,3 +55,4 @@ if (window.devToolsExtension) {
     window.devToolsExtension.open();
 }
 
+store.dispatch(requestAuthorisation('ewf','wef'));
