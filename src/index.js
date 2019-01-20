@@ -3,16 +3,13 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import {applyMiddleware, createStore} from "redux";
 
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {Router, Route} from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
-import FormContainer from './js/components/container/FormContainer';
-import {HeaderComponent} from "./js/components/container/HeaderComponent";
-import {FooterComponent} from "./js/components/container/HeaderComponent";
-import {requestAuthorisation} from "./js/service/RequestAuthorization";
+import {MainLayout} from "./js/components/MainLayout";
 import thunk from 'redux-thunk';
 
-
+const location = '/realClient/dist/index.html';
 
 const createState = () => ({
    userInfo: {
@@ -21,7 +18,9 @@ const createState = () => ({
        isAuthorized: false
    }
 });
+const history = createBrowserHistory();
 let reducer = (state = createState(), action) => {
+    console.log('history ' +  history.action + " " + history.goForward() + " " + history.location);
     switch (action.type) {
         case 'ADD_CRED': {
             let {login, password, isAuthorized} = action.payload;
@@ -31,22 +30,17 @@ let reducer = (state = createState(), action) => {
     return state;
 };
 
-const history = createBrowserHistory();
+
 const store = createStore(reducer,applyMiddleware(thunk));
 
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter>
-        <div>
-            <HeaderComponent/>
-            <Switch>
-                <Route path='/log-in' render={() => <FormContainer title={'LogIn'}/>}/>
-                <Route path='/sign-up' render={() => <FormContainer title={'SignUp'}/>}/>
-            </Switch>
-            <FooterComponent/>
-        </div>
-        </BrowserRouter>
+        <Router history={history}>
+            <Route url='/' component={MainLayout}/>
+        </Router>
+
+
     </Provider>
     , document.getElementById('app'));
 
@@ -55,4 +49,3 @@ if (window.devToolsExtension) {
     window.devToolsExtension.open();
 }
 
-store.dispatch(requestAuthorisation('ewf','wef'));

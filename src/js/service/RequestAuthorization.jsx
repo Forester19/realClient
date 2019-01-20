@@ -1,15 +1,16 @@
+import {UserInfoAction} from "../actions/UserInfoAction";
 
 
-export const requestAuthorisation = (login, password) => async (dispatch, getState) => {
+export const RequestAuthorisation = (login, password) => async (dispatch, getState) => {
 
-    let json = await fetch('/realClient/dist/cred.json').then(response => response.json());
-    let action = {
-        type: 'ADD_CRED',
-        payload: {
-            login: json.login,
-            password: json.password,
-            isAuthorized: json.isLoggedIn
-        }
-    };
-    dispatch(action);
+    let json = await fetch('/Users/vladyslav/Desktop/react/ClientSIde/realClient/dist/cred.json').then(response => response.json());
+
+    console.log('json from requestAuthorisation  ' +JSON.stringify(json));
+
+    if(json.login === login && json.password === password){
+        dispatch(UserInfoAction(json.login,json.password, true));
+    }else {
+        dispatch(UserInfoAction('','',false));
+    }
+
 };
