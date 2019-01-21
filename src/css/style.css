@@ -41,6 +41,12 @@ body{
     display: inline-block;
 
 }
+.log-out{
+    display: inline-block;
+    position: relative;
+    right: -450px;
+    top: 20px;
+}
 .loginMenu{
     display: inline-block;
     position: absolute;

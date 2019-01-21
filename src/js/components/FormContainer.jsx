@@ -10,7 +10,8 @@ class FormContainer extends React.Component {
         this.state ={
                 login:props.login,
                 password:props.password,
-                isAuthorized: props.isAuthorized
+                isAuthorized: props.isAuthorized,
+                secondPassword: ''
         }
 
     }
@@ -20,9 +21,12 @@ class FormContainer extends React.Component {
     setPassword = (event)  => {
         this.setState({password: event.target.value});
     };
+    setSecondPassword = (event)  => {
+        this.setState({secondPassword: event.target.value});
+    };
     verifyCredentials = () => {
-        console.log('verifyCredentials');
-        return !!(this.state.login && this.state.password);
+        console.log('verifyCredentials ' + this.verifyPasswordsOnEqual());
+        return !!(this.state.login && this.state.password) && this.verifyPasswordsOnEqual();
     };
 
     componentWillReceiveProps(nextProps, nextContext) {
@@ -46,30 +50,66 @@ class FormContainer extends React.Component {
         event.preventDefault();
         this.props.dispatch(RequestAuthorisation(this.state.login,this.state.password));
     };
+    verifyPasswordsOnEqual = () => {
+        return this.state.password === this.state.secondPassword;
+    };
 
     render() {
-        return <div className="container">
-            <div>{this.props.title}</div>
-            <form onSubmit={this.verifyUserInfo}>
-                <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Login or email address</label>
-                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                           placeholder="Enter email" value={this.state.login} onChange={this.setLogin}/>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Password</label>
-                    <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
-                           onChange={this.setPassword}/>
-                </div>
-                <div className="form-group form-check">
-                    <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
-                </div>
-                <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
-                        onClick={this.setCredentials}>Submit
-                </button>
-            </form>
-        </div>
+        this.verifyPasswordsOnEqual();
+        if (this.props.title === "LogIn") {
+            return <div className="container">
+                <div>{this.props.title}</div>
+                <form onSubmit={this.verifyUserInfo}>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">Login or email address</label>
+                        <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                               placeholder="Enter email" value={this.state.login} onChange={this.setLogin}/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">Password</label>
+                        <input type="password" className="form-control" id="exampleInputPassword1"
+                               placeholder="Password"
+                               onChange={this.setPassword}/>
+                    </div>
+                    <div className="form-group form-check">
+                        <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
+                        <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
+                            onClick={this.setCredentials}>Submit
+                    </button>
+                </form>
+            </div>
+        } else if (this.props.title === "SignUp") {
+            return <div className="container">
+                <div>{this.props.title}</div>
+                <form onSubmit={this.verifyUserInfo}>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputEmail1">Login or email address</label>
+                        <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                               placeholder="Enter email" value={this.state.login} onChange={this.setLogin}/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">Password</label>
+                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
+                               onChange={this.setPassword}/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="exampleInputPassword1">Password</label>
+                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password once more"
+                               onChange={this.setSecondPassword}/>
+                    </div>
+                    <div className="form-group form-check">
+                        <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
+                        <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
+                            onClick={this.setCredentials}>Submit
+                    </button>
+                </form>
+            </div>
+        }
+
 
     }
 }

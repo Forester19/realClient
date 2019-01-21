@@ -3,6 +3,7 @@ import {Menu} from './MenuComponent';
 import {connect} from 'react-redux';
 import ButtonWrapperComponent from "./wrappers/ButtonWrapperComponent";
 import {UserInfoAction} from "../actions/UserInfoAction";
+import {Link} from "react-router-dom";
 
 class HeaderComponent extends React.Component{
     constructor(props){
@@ -23,7 +24,7 @@ class HeaderComponent extends React.Component{
             return <div className={'header'}>
                 <h2>Header</h2>
                 <Menu items = {['Home', 'Service', 'Delivery','Contacts','Our partners']} customClassName={'mainMenu'} mainMenuOption={'mainMenuOption'}/>
-                <ButtonWrapperComponent text='Log Out' className='log-out' onClick={this.logOutHandler}/>
+                <div className='log-out'><Link to={'/'} onClick={this.logOutHandler}>Log Out</Link> </div>
                 <div className='userInfo'>Logged in as: {this.props.login}</div>
             </div>
         }else{
