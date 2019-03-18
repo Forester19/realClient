@@ -17,7 +17,8 @@ const createState = () => ({
        password: '',
        isAuthorized: false,
        isLogin: false
-   }
+   },
+   productsInfo:[]
 });
 const history = createBrowserHistory();
 let reducer = (state = createState(), action) => {

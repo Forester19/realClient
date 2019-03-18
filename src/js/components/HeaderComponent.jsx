@@ -1,7 +1,6 @@
 import React from 'react';
 import {Menu} from './MenuComponent';
 import {connect} from 'react-redux';
-import ButtonWrapperComponent from "./wrappers/ButtonWrapperComponent";
 import {UserInfoAction} from "../actions/UserInfoAction";
 import {Link} from "react-router-dom";
 
@@ -23,6 +22,7 @@ class HeaderComponent extends React.Component{
         if(this.props.isAuthorized){
             return <div className={'header'}>
                 <h2>Header</h2>
+                <button onClick={TestConnectionToServer}>TestConnectionToServer</button>
                 <Menu items = {['Home', 'Service', 'Delivery','Contacts','Our partners']} customClassName={'mainMenu'} mainMenuOption={'mainMenuOption'}/>
                 <div className='log-out'><Link to={'/'} onClick={this.logOutHandler}>Log Out</Link> </div>
                 <div className='userInfo'>Logged in as: {this.props.login}</div>
