@@ -15,16 +15,16 @@ const createState = () => ({
    userInfo: {
        login: '',
        password: '',
-       isAuthorized: false
+       isAuthorized: false,
+       isLogin: false
    }
 });
 const history = createBrowserHistory();
 let reducer = (state = createState(), action) => {
-    console.log('history ' +  history.action + " " + history.goForward() + " " + history.location);
     switch (action.type) {
         case 'ADD_CRED': {
-            let {login, password, isAuthorized} = action.payload;
-            return {...state, userInfo: {login, password, isAuthorized}};
+            let {login, password, isAuthorized,isLogin} = action.payload;
+            return {...state, userInfo: {login, password, isAuthorized, isLogin}};
         }
     }
     return state;

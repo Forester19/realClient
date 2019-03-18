@@ -11,7 +11,8 @@ class FormContainer extends React.Component {
                 login:props.login,
                 password:props.password,
                 isAuthorized: props.isAuthorized,
-                secondPassword: ''
+                secondPassword: '',
+                isLogin: false
         }
 
     }
@@ -26,21 +27,39 @@ class FormContainer extends React.Component {
     };
     verifyCredentials = () => {
         console.log('verifyCredentials ' + this.verifyPasswordsOnEqual());
-        return !!(this.state.login && this.state.password) && this.verifyPasswordsOnEqual();
+        if (this.props.title !== 'LogIn') {
+            console.log('verifyCredentials this.props.title !== \'LogIn\'');
+            return !!(this.state.login && this.state.password) && this.verifyPasswordsOnEqual();
+        } else {
+            return !!(this.state.login && this.state.password)
+        }
     };
 
     componentWillReceiveProps(nextProps, nextContext) {
         this.state.login = nextProps.login;
     }
 
-    setCredentials = () => {
-        console.log('action');
+    setCredentialsLogIn = () => {
         let action = {
             type: 'ADD_CRED',
             payload: {
                 login: this.state.login,
                 password: this.state.password,
-                isAuthorized: true
+                isAuthorized: true,
+                isLogin: true
+            }
+        };
+        this.props.dispatch(action);
+    };
+
+    setCredentialsSignUP = () => {
+        let action = {
+            type: 'ADD_CRED',
+            payload: {
+                login: this.state.login,
+                password: this.state.password,
+                isAuthorized: true,
+                isLogin: false
             }
         };
         this.props.dispatch(action);
@@ -50,6 +69,12 @@ class FormContainer extends React.Component {
         event.preventDefault();
         this.props.dispatch(RequestAuthorisation(this.state.login,this.state.password));
     };
+
+    setUserInfo = (event) => {
+        event.preventDefault();
+
+    };
+
     verifyPasswordsOnEqual = () => {
         return this.state.password === this.state.secondPassword;
     };
@@ -76,7 +101,7 @@ class FormContainer extends React.Component {
                         <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                     </div>
                     <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
-                            onClick={this.setCredentials}>Submit
+                            onClick={this.setCredentialsLogIn}>Submit
                     </button>
                 </form>
             </div>
@@ -104,7 +129,7 @@ class FormContainer extends React.Component {
                         <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                     </div>
                     <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
-                            onClick={this.setCredentials}>Submit
+                            onClick={() =>{this.setCredentialsSignUP}}>Submit
                     </button>
                 </form>
             </div>
