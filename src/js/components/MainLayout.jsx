@@ -4,6 +4,7 @@ import FormContainer from "./FormContainer";
 import {FooterComponent} from "./HeaderComponent";
 import HeaderComponent from "./HeaderComponent";
 import ProductHandling from "./ProductHandling";
+import ProductsComponent from "./ProductsContainer";
 
 
 export class MainLayout extends React.Component {
@@ -12,11 +13,12 @@ export class MainLayout extends React.Component {
             <Route path='/' render={() => {
                 return <div>
                     <HeaderComponent/>
-                    <ProductHandling/>
                     <Switch>
                         <Route path='/log-in' render={() => <FormContainer title={'LogIn'}/>}/>
                         <Route path='/sign-up' render={() => <FormContainer title={'SignUp'}/>}/>
                     </Switch>
+                    <ProductHandling/>
+                    <ProductsComponent/>
                     <FooterComponent/>
                 </div>
             }}/>

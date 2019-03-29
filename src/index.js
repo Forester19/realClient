@@ -27,6 +27,10 @@ let reducer = (state = createState(), action) => {
             let {login, password, isAuthorized,isLogin} = action.payload;
             return {...state, userInfo: {login, password, isAuthorized, isLogin}};
         }
+        case 'ADD_PRODUCTS':{
+            let {productsInfo}  = action.payload;
+            return {...state, productsInfo: {productsInfo}}
+        }
     }
     return state;
 };
