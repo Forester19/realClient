@@ -18,18 +18,23 @@ const createState = () => ({
        isAuthorized: false,
        isLogin: false
    },
-   productsInfo:[]
+    productsInfo: [],
+    openFieldsForNewProduct: false
 });
 const history = createBrowserHistory();
 let reducer = (state = createState(), action) => {
     switch (action.type) {
         case 'ADD_CRED': {
-            let {login, password, isAuthorized,isLogin} = action.payload;
+            let {login, password, isAuthorized, isLogin} = action.payload;
             return {...state, userInfo: {login, password, isAuthorized, isLogin}};
         }
-        case 'ADD_PRODUCTS':{
-            let {productsInfo}  = action.payload;
+        case 'ADD_PRODUCTS': {
+            let {productsInfo} = action.payload;
             return {...state, productsInfo: {productsInfo}}
+        }
+        case 'OPEN_FIELDS_FOR_NEW_PRODUCT' : {
+            console.log('OPEN_FIELDS_FOR_NEW_PRODUCT action ' + action.payload);
+            return {...state, openFieldsForNewProduct: action.payload}
         }
     }
     return state;

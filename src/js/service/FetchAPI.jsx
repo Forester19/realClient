@@ -8,21 +8,14 @@ export async function ProductQueryGET() {
     return products;
 }
 
-export const ProductQueryPOST = () => async () => {
-   /*
-   *var json = fetch('/products',
-   * {method:'POST',
-   * headers:{'Content-Type':'application/json'},
-   * body:JSON.stringify({"id":0,"title":"new1","description":"wefwf","price":100})}).
-   * then(result => result.json()).
-   * then(data => console.log(data));
-   * */
-
+export const ProductQueryPOST = async (product) => {
+    console.log('ProductQueryPOST ' + product);
     let paramsToFetch = {method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({"id":0,"title":"new1","description":"wefwf","price":100})};
+        body:JSON.stringify(product)};
     let createRequest = new Request('http://localhost:8080/products', paramsToFetch);
-    await fetch(createRequest).then(response => response.json()).then(console.log);
+    let productOne = await fetch(createRequest).then(response => response.json());
+    console.log('ProductQueryPOST productOne ' + JSON.stringify(productOne));
 
 };
 export const ProductQueryPUT = () => async () => {

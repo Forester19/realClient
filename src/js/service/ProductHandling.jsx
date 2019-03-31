@@ -1,7 +1,8 @@
 import React from 'react';
-import {ProductQueryGET} from "../service/FetchAPI";
+import {ProductQueryGET} from "./FetchAPI";
 import {connect} from "react-redux";
 import {GetProductsAction} from "../actions/GetProductsAction";
+import {OpenFieldsForNewProductAction} from "../actions/OpenFieldsForNewProductAction";
 
 
 class ProductHandling extends React.Component {
@@ -16,11 +17,15 @@ class ProductHandling extends React.Component {
         let listProductsJSON = await ProductQueryGET();
         this.props.dispatch(GetProductsAction(listProductsJSON));
     };
+    openFieldsForNewProduct = () => {
+        this.props.dispatch(OpenFieldsForNewProductAction(true));
+    };
 
 
     render() {
         return <div className="testConnectToServer">
             <button onClick={this.getProducts}>Get All Products</button>
+            <button onClick={this.openFieldsForNewProduct}>Add New Product</button>
         </div>
     }
 }

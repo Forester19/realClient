@@ -3,8 +3,9 @@ import {Route, Switch} from "react-router";
 import FormContainer from "./FormContainer";
 import {FooterComponent} from "./HeaderComponent";
 import HeaderComponent from "./HeaderComponent";
-import ProductHandling from "./ProductHandling";
-import ProductsComponent from "./ProductsContainer";
+import ProductHandling from "../service/ProductHandling";
+import ProductsComponent from "./ProductsComponent";
+import NewProductFieldsComponent from "./NewProductFieldsComponent";
 
 
 export class MainLayout extends React.Component {
@@ -18,6 +19,7 @@ export class MainLayout extends React.Component {
                         <Route path='/sign-up' render={() => <FormContainer title={'SignUp'}/>}/>
                     </Switch>
                     <ProductHandling/>
+                    <NewProductFieldsComponent/>
                     <ProductsComponent/>
                     <FooterComponent/>
                 </div>
