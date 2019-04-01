@@ -1,7 +1,6 @@
 import React from 'react';
 import {Route, Switch} from "react-router";
 import FormContainer from "./FormContainer";
-import {FooterComponent} from "./HeaderComponent";
 import HeaderComponent from "./HeaderComponent";
 import ProductHandling from "../service/ProductHandling";
 import ProductsComponent from "./ProductsComponent";
@@ -21,7 +20,6 @@ export class MainLayout extends React.Component {
                     <ProductHandling/>
                     <NewProductFieldsComponent/>
                     <ProductsComponent/>
-                    <FooterComponent/>
                 </div>
             }}/>
         </div>

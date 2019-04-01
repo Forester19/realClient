@@ -14,7 +14,14 @@ body{
     min-height: 100%;
     font-family: "Helvetica Neue", Arial, sans-serif;
 }
-
+#app{
+    position: relative;
+}
+.root{
+    min-height: 100vh;
+    position: relative;
+    padding-bottom: 30px;
+}
 /*Header start*/
 .header {
     text-align: justify;

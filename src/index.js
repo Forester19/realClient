@@ -8,6 +8,7 @@ import { createBrowserHistory } from 'history';
 
 import {MainLayout} from "./js/components/MainLayout";
 import thunk from 'redux-thunk';
+import {FooterComponent} from "./js/components/HeaderComponent";
 
 const location = '/realClient/dist/index.html';
 
@@ -49,7 +50,7 @@ ReactDOM.render(
         <Router history={history}>
             <Route url='/' component={MainLayout}/>
         </Router>
-
+        <FooterComponent/>
 
     </Provider>
     , document.getElementById('app'));

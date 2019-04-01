@@ -1,6 +1,8 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {ProductQueryPOST} from "../service/FetchAPI";
+import {ProductQueryGET, ProductQueryPOST} from "../service/FetchAPI";
+import {OpenFieldsForNewProductAction} from "../actions/OpenFieldsForNewProductAction";
+import {GetProductsAction} from "../actions/GetProductsAction";
 
 class NewProductFieldsComponent extends React.Component {
     constructor(props) {
@@ -51,8 +53,10 @@ class NewProductFieldsComponent extends React.Component {
     submitProduct = async (event) => {
         event.preventDefault();
         let resultProduct = this.state;
-        console.log('submitProduct ' + JSON.stringify(resultProduct));
         await ProductQueryPOST(resultProduct);
+        let listProductsJSON = await ProductQueryGET();
+        this.props.dispatch(GetProductsAction(listProductsJSON));
+        this.props.dispatch(OpenFieldsForNewProductAction(false));
         return false;
     };
 
