@@ -3,6 +3,7 @@ import {Menu} from './MenuComponent';
 import {connect} from 'react-redux';
 import {UserInfoAction} from "../actions/UserInfoAction";
 import {Link} from "react-router-dom";
+import {LoginSignUpModalShown} from "../actions/LoginSignUpModalShown";
 
 class HeaderComponent extends React.Component{
     constructor(props){
@@ -10,12 +11,21 @@ class HeaderComponent extends React.Component{
         this.state ={
             login:props.login,
             password:props.password,
-            isAuthorized: props.isAuthorized
+            isAuthorized: props.isAuthorized,
+            isShownLoginSignupModal: false
         }
     }
 
     logOutHandler = () =>{
       this.props.dispatch(UserInfoAction('','',false));
+    };
+
+    logInShow = () =>{
+        console.log('click on button');
+        this.props.dispatch(LoginSignUpModalShown(1));
+    };
+    signUpShow = () =>{
+        this.props.dispatch(LoginSignUpModalShown(2));
     };
 
     render(){
@@ -31,8 +41,11 @@ class HeaderComponent extends React.Component{
             return <div className={'header'}>
                 <h2>Header</h2>
                 <Menu items = {['Home', 'Service', 'Delivery','Contacts','Our partners']} customClassName={'mainMenu'} mainMenuOption={'mainMenuOption'}/>
-                <Menu items={['Sign Up', 'Log In']} customClassName={'loginMenu'} mainMenuOption={'mainMenuOption'}/>
-            </div>
+               <div className='loginMenu'>
+                   <div className='loginItem' style={{cursor: 'pointer'}} onClick={this.logInShow}>LogIn</div>
+                   <div className='signupItem' style={{cursor: 'pointer'}} onClick={this.signUpShow}>SignUp</div>
+               </div>
+                </div>
         }
     }
 
@@ -41,7 +54,8 @@ function mapStateToProps(state) {
     return {
         login: state.userInfo.login,
         password:state.userInfo.password,
-        isAuthorized:state.userInfo.isAuthorized
+        isAuthorized:state.userInfo.isAuthorized,
+        isShownLoginSignupModal: state.isLoginSignupShown
     }
 }
 export default connect(mapStateToProps)(HeaderComponent);

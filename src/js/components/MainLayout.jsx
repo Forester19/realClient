@@ -13,10 +13,11 @@ export class MainLayout extends React.Component {
             <Route path='/' render={() => {
                 return <div>
                     <HeaderComponent/>
-                    <Switch>
+                    <FormContainer/>
+                   {/* <Switch>
                         <Route path='/log-in' render={() => <FormContainer title={'LogIn'}/>}/>
                         <Route path='/sign-up' render={() => <FormContainer title={'SignUp'}/>}/>
-                    </Switch>
+                    </Switch>*/}
                     <ProductHandling/>
                     <NewProductFieldsComponent/>
                     <ProductsComponent/>

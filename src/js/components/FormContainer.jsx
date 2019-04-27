@@ -1,28 +1,34 @@
 import React from "react";
 import {connect} from 'react-redux';
 import {RequestAuthorisation} from "../service/RequestAuthorization";
+import {LoginSignUpModalShown} from "../actions/LoginSignUpModalShown";
 
 
 class FormContainer extends React.Component {
     constructor(props) {
         super(props);
         console.log('constructor');
-        this.state ={
-                login:props.login,
-                password:props.password,
-                isAuthorized: props.isAuthorized,
-                secondPassword: '',
-                isLogin: false
+        this.state = {
+            login: props.login,
+            password: props.password,
+            isAuthorized: props.isAuthorized,
+            secondPassword: '',
+            isLogin: false,
+            isModalShown: 0
         }
 
     }
+
+    hideLoginSignUpModal = () => {
+        this.props.dispatch(LoginSignUpModalShown(0));
+    };
     setLogin = (event) => {
         this.setState({login: event.target.value});
     };
-    setPassword = (event)  => {
+    setPassword = (event) => {
         this.setState({password: event.target.value});
     };
-    setSecondPassword = (event)  => {
+    setSecondPassword = (event) => {
         this.setState({secondPassword: event.target.value});
     };
     verifyCredentials = () => {
@@ -67,7 +73,8 @@ class FormContainer extends React.Component {
 
     verifyUserInfo = (event) => {
         event.preventDefault();
-        this.props.dispatch(RequestAuthorisation(this.state.login,this.state.password));
+        event.stopPropagation();
+        this.props.dispatch(RequestAuthorisation(this.state.login, this.state.password));
     };
 
     setUserInfo = (event) => {
@@ -81,9 +88,12 @@ class FormContainer extends React.Component {
 
     render() {
         this.verifyPasswordsOnEqual();
-        if (this.props.title === "LogIn") {
-            return <div className="container">
-                <div>{this.props.title}</div>
+        if (this.props.isModalShown === 1) {
+            return <div className="container loginContainer">
+                <div className='login-form-header'>
+                    <div>LogIn</div>
+                    <div className='closeButton' onClick={this.hideLoginSignUpModal}>X</div>
+                </div>
                 <form onSubmit={this.verifyUserInfo}>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Login or email address</label>
@@ -100,12 +110,12 @@ class FormContainer extends React.Component {
                         <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
                         <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                     </div>
-                    <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
+                    <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary signupItem"
                             onClick={this.setCredentialsLogIn}>Submit
                     </button>
                 </form>
             </div>
-        } else if (this.props.title === "SignUp") {
+        } else if (this.props.isModalShown === 2) {
             return <div className="container">
                 <div>{this.props.title}</div>
                 <form onSubmit={this.verifyUserInfo}>
@@ -116,12 +126,14 @@ class FormContainer extends React.Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputPassword1">Password</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"
+                        <input type="password" className="form-control" id="exampleInputPassword1"
+                               placeholder="Password"
                                onChange={this.setPassword}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleInputPassword1">Password</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password once more"
+                        <input type="password" className="form-control" id="exampleInputPassword1"
+                               placeholder="Password once more"
                                onChange={this.setSecondPassword}/>
                     </div>
                     <div className="form-group form-check">
@@ -129,22 +141,24 @@ class FormContainer extends React.Component {
                         <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                     </div>
                     <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
-                            onClick={() =>{this.setCredentialsSignUP}}>Submit
+                            onClick={() => {
+                                this.setCredentialsSignUP
+                            }}>Submit
                     </button>
                 </form>
             </div>
+        } else {
+                        return '';
         }
-
-
     }
 }
 
 function mapStateToProps(state) {
-    console.log('mapStateToProps');
     return {
         login: state.userInfo.login,
-        password:state.userInfo.password,
-        isAuthorized:state.userInfo.isAuthorized
+        password: state.userInfo.password,
+        isAuthorized: state.userInfo.isAuthorized,
+        isModalShown: state.isLoginSignupShown
     }
 }
 

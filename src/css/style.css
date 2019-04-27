@@ -60,6 +60,11 @@ body{
     display: inline-block;
 
 }
+
+.signupItem{
+   margin-left: 20px;
+}
+
 .log-out{
     display: inline-block;
     position: relative;
@@ -72,6 +77,35 @@ body{
     top: 60px;
     right: 50px;
 }
+.loginContainer{
+    position: absolute;
+    width: 20em !important;
+    background-color: darkgrey;
+    right: 0;
+    opacity: 0.95;
+    top: 100px;
+    padding-bottom: 10px;
+    border-top-right-radius: 60px;
+    border-bottom-left-radius: 60px
+}
+
+.submitButton {
+    margin-left: 30px;
+}
+
+.login-form-header {
+    display: flex;
+}
+
+.loginContainer .closeButton {
+    margin-left: 12em;
+    cursor: pointer;
+}
+
+.loginContainer .closeButton:hover {
+    color: yellow;
+}
+
 /*Login end*/
 
 .signup, .signin{

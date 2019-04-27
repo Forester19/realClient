@@ -20,7 +20,8 @@ const createState = () => ({
        isLogin: false
    },
     productsInfo: [],
-    openFieldsForNewProduct: false
+    openFieldsForNewProduct: false,
+    isLoginSignupShown: 0  // no show - 0; login - 1; sign up -2;
 });
 const history = createBrowserHistory();
 let reducer = (state = createState(), action) => {
@@ -36,6 +37,9 @@ let reducer = (state = createState(), action) => {
         case 'OPEN_FIELDS_FOR_NEW_PRODUCT' : {
             console.log('OPEN_FIELDS_FOR_NEW_PRODUCT action ' + action.payload);
             return {...state, openFieldsForNewProduct: action.payload}
+        }
+        case 'MODAL_IS_SHOWN' : {
+            return {...state, isLoginSignupShown: action.payload}
         }
     }
     return state;
