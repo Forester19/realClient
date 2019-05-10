@@ -32,7 +32,6 @@ class HeaderComponent extends React.Component{
         if(this.props.isAuthorized){
             return <div className={'header'}>
                 <h2>Header</h2>
-                <button onClick={TestConnectionToServer}>TestConnectionToServer</button>
                 <Menu items = {['Home', 'Service', 'Delivery','Contacts','Our partners']} customClassName={'mainMenu'} mainMenuOption={'mainMenuOption'}/>
                 <div className='log-out'><Link to={'/'} onClick={this.logOutHandler}>Log Out</Link> </div>
                 <div className='userInfo'>Logged in as: {this.props.login}</div>
@@ -42,8 +41,8 @@ class HeaderComponent extends React.Component{
                 <h2>Header</h2>
                 <Menu items = {['Home', 'Service', 'Delivery','Contacts','Our partners']} customClassName={'mainMenu'} mainMenuOption={'mainMenuOption'}/>
                <div className='loginMenu'>
-                   <div className='loginItem' style={{cursor: 'pointer'}} onClick={this.logInShow}>LogIn</div>
-                   <div className='signupItem' style={{cursor: 'pointer'}} onClick={this.signUpShow}>SignUp</div>
+                   <div className='loginItem' style={{cursor: 'pointer'}} onClick={this.logInShow}><Link to={'/log-in'}>LogIn</Link></div>
+                   <div className='signupItem' style={{cursor: 'pointer'}} onClick={this.signUpShow}><Link to={'/sign-up'}>SignUp</Link></div>
                </div>
                 </div>
         }

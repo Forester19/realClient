@@ -16,6 +16,7 @@ const createState = () => ({
    userInfo: {
        login: '',
        password: '',
+       role:'',
        isAuthorized: false,
        isLogin: false
    },
@@ -27,8 +28,8 @@ const history = createBrowserHistory();
 let reducer = (state = createState(), action) => {
     switch (action.type) {
         case 'ADD_CRED': {
-            let {login, password, isAuthorized, isLogin} = action.payload;
-            return {...state, userInfo: {login, password, isAuthorized, isLogin}};
+            let {login, password, role, isAuthorized, isLogin} = action.payload;
+            return {...state, userInfo: {login, password, role, isAuthorized, isLogin}};
         }
         case 'ADD_PRODUCTS': {
             let {productsInfo} = action.payload;

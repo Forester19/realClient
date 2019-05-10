@@ -9,13 +9,11 @@ export async function ProductQueryGET() {
 }
 
 export const ProductQueryPOST = async (product) => {
-    console.log('ProductQueryPOST ' + product);
     let paramsToFetch = {method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify(product)};
     let createRequest = new Request('http://localhost:8080/products', paramsToFetch);
-    let productOne = await fetch(createRequest).then(response => response.json());
-    console.log('ProductQueryPOST productOne ' + JSON.stringify(productOne));
+    return await fetch(createRequest).then(response => response.json());
 
 };
 export const ProductQueryPUT = () => async () => {

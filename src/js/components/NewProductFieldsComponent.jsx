@@ -1,6 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import {ProductQueryGET, ProductQueryPOST} from "../service/FetchAPI";
+import {ProductQueryGET, ProductQueryPOST} from "../service/ProductFetchAPI";
 import {OpenFieldsForNewProductAction} from "../actions/OpenFieldsForNewProductAction";
 import {GetProductsAction} from "../actions/GetProductsAction";
 

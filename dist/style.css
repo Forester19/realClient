@@ -67,9 +67,9 @@ body{
 
 .log-out{
     display: inline-block;
-    position: relative;
-    right: -450px;
-    top: 20px;
+    position: absolute;
+    top: 60px;
+    right: 50px;
 }
 .loginMenu{
     display: inline-block;
@@ -88,6 +88,11 @@ body{
     border-top-right-radius: 60px;
     border-bottom-left-radius: 60px
 }
+.wrong-creds .login-form:before {
+   content: 'Wrong credentials...';
+    color: red;
+}
+
 
 .submitButton {
     margin-left: 30px;
@@ -107,6 +112,23 @@ body{
 }
 
 /*Login end*/
+
+
+/*
+start overlay
+ */
+.wait-for-login-response #overlay {
+    width: 100em;
+    height: 100em;
+    position: fixed;
+    z-index: 999;
+    opacity: 0.5;
+    background-color: black;
+}
+
+/*
+end overlay
+ */
 
 .signup, .signin{
     width: 75%;

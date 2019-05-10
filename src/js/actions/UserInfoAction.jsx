@@ -1,10 +1,12 @@
-export const UserInfoAction = (login, password, isAuthorized) => {
+export const UserInfoAction = (login, password,role, isAuthorized, isLogin) => {
     return  {
         type: 'ADD_CRED',
         payload: {
             login: login,
             password: password,
-            isAuthorized: isAuthorized
+            role: role,
+            isAuthorized: isAuthorized,
+            isLogin: isLogin
         }
     };
 };

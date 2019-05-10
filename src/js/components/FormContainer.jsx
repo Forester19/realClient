@@ -1,7 +1,8 @@
 import React from "react";
 import {connect} from 'react-redux';
-import {RequestAuthorisation} from "../service/RequestAuthorization";
+import {LoginQueryGET} from "../service/AuthorizationFetchAPI";
 import {LoginSignUpModalShown} from "../actions/LoginSignUpModalShown";
+import {UserInfoAction} from "../actions/UserInfoAction";
 
 
 class FormContainer extends React.Component {
@@ -11,6 +12,7 @@ class FormContainer extends React.Component {
         this.state = {
             login: props.login,
             password: props.password,
+            role: props.role,
             isAuthorized: props.isAuthorized,
             secondPassword: '',
             isLogin: false,
@@ -45,19 +47,6 @@ class FormContainer extends React.Component {
         this.state.login = nextProps.login;
     }
 
-    setCredentialsLogIn = () => {
-        let action = {
-            type: 'ADD_CRED',
-            payload: {
-                login: this.state.login,
-                password: this.state.password,
-                isAuthorized: true,
-                isLogin: true
-            }
-        };
-        this.props.dispatch(action);
-    };
-
     setCredentialsSignUP = () => {
         let action = {
             type: 'ADD_CRED',
@@ -71,10 +60,21 @@ class FormContainer extends React.Component {
         this.props.dispatch(action);
     };
 
-    verifyUserInfo = (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        this.props.dispatch(RequestAuthorisation(this.state.login, this.state.password));
+    verifyUserInfo = async () => {
+        var user = {login: this.state.login, password: this.state.password};
+        var userFromServer = await LoginQueryGET(user);
+        console.log('user from server ' + JSON.stringify(userFromServer));
+        if (userFromServer.login !== null) {
+            this.props.dispatch(UserInfoAction(userFromServer.login, userFromServer.password, userFromServer.role, true, true));
+            setTimeout(this.props.dispatch(LoginSignUpModalShown(0)), 500);
+        } else {
+            document.body.classList.add('wrong-creds');
+            setTimeout(() => {
+                document.body.classList.remove('wrong-creds');
+                this.setState({login: '', password: ''});
+            }, 3000);
+            console.log('null user from server');
+        }
     };
 
     setUserInfo = (event) => {
@@ -94,7 +94,10 @@ class FormContainer extends React.Component {
                     <div>LogIn</div>
                     <div className='closeButton' onClick={this.hideLoginSignUpModal}>X</div>
                 </div>
-                <form onSubmit={this.verifyUserInfo}>
+                <form className={'login-form'} onSubmit={function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }}>
                     <div className="form-group">
                         <label htmlFor="exampleInputEmail1">Login or email address</label>
                         <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
@@ -110,8 +113,9 @@ class FormContainer extends React.Component {
                         <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
                         <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                     </div>
-                    <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary signupItem"
-                            onClick={this.setCredentialsLogIn}>Submit
+                    <button type={'submit'} disabled={!this.verifyCredentials()} onClick={this.verifyUserInfo}
+                            className="btn btn-primary signupItem">
+                        Submit
                     </button>
                 </form>
             </div>
@@ -140,15 +144,15 @@ class FormContainer extends React.Component {
                         <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
                         <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
                     </div>
-                    <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
+                    {/* <button type="submit" disabled={!this.verifyCredentials()} className="btn btn-primary"
                             onClick={() => {
                                 this.setCredentialsSignUP
                             }}>Submit
-                    </button>
+                    </button>*/}
                 </form>
             </div>
         } else {
-                        return '';
+            return '';
         }
     }
 }
@@ -157,6 +161,7 @@ function mapStateToProps(state) {
     return {
         login: state.userInfo.login,
         password: state.userInfo.password,
+        role: state.userInfo.role,
         isAuthorized: state.userInfo.isAuthorized,
         isModalShown: state.isLoginSignupShown
     }
