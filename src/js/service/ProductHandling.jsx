@@ -21,17 +21,24 @@ class ProductHandling extends React.Component {
         this.props.dispatch(OpenFieldsForNewProductAction(true));
     };
 
-
     render() {
-        return <div className="testConnectToServer">
-            <button onClick={this.getProducts}>Get All Products</button>
-            <button onClick={this.openFieldsForNewProduct}>Add New Product</button>
-        </div>
+        if(this.props.isAuthorized && this.props.role === 'ADMIN'){
+            return <div className="testConnectToServer">
+                <button onClick={this.getProducts}>Get All Products</button>
+                <button onClick={this.openFieldsForNewProduct}>Add New Product</button>
+            </div>
+        }else {
+            return <div className="testConnectToServer">
+                <button onClick={this.getProducts}>Get All Products</button>
+           </div>
+        }
     }
 }
 function mapStateToProps(state) {
     return {
-        productsInfo: state.productsInfo
+        productsInfo: state.productsInfo,
+        isAuthorized: state.userInfo.isAuthorized,
+        role: state.userInfo.role
     }
 }
 

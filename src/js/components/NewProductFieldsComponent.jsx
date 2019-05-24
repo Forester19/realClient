@@ -8,7 +8,7 @@ class NewProductFieldsComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id:0,
+            id: 0,
             title: '',
             description: '',
             price: ''

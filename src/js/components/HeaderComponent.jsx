@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {UserInfoAction} from "../actions/UserInfoAction";
 import {Link} from "react-router-dom";
 import {LoginSignUpModalShown} from "../actions/LoginSignUpModalShown";
+import {OpenFieldsForNewProductAction} from "../actions/OpenFieldsForNewProductAction";
 
 class HeaderComponent extends React.Component{
     constructor(props){
@@ -17,7 +18,8 @@ class HeaderComponent extends React.Component{
     }
 
     logOutHandler = () =>{
-      this.props.dispatch(UserInfoAction('','',false));
+      this.props.dispatch(UserInfoAction('','','', false, false));
+      this.props.dispatch(OpenFieldsForNewProductAction(false));
     };
 
     logInShow = () =>{
