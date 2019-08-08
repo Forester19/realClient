@@ -149,3 +149,10 @@ end overlay
     right: 0;
     padding-top: 10px;
 }
+
+.circle-ball{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: red;
+}

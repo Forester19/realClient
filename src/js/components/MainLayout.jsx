@@ -5,6 +5,7 @@ import HeaderComponent from "./HeaderComponent";
 import ProductHandling from "../service/ProductHandling";
 import ProductsComponent from "./ProductsComponent";
 import NewProductFieldsComponent from "./NewProductFieldsComponent";
+import {Circle} from "./Circle";
 
 
 export class MainLayout extends React.Component {
@@ -20,6 +21,8 @@ export class MainLayout extends React.Component {
                     <ProductHandling/>
                     <NewProductFieldsComponent/>
                     <ProductsComponent/>
+                    <Circle step={3}/>
+                    <Circle step={6}/>
                 </div>
             }}/>
         </div>

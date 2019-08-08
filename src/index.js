@@ -9,6 +9,7 @@ import { createBrowserHistory } from 'history';
 import {MainLayout} from "./js/components/MainLayout";
 import thunk from 'redux-thunk';
 import {FooterComponent} from "./js/components/HeaderComponent";
+import {Circle} from "./js/components/Circle";
 
 const location = '/realClient/dist/index.html';
 
